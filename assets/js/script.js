@@ -72,23 +72,23 @@ function generatePassword(){
   //Prompt: include numbers y/n
   step = 0;
   passwordCriterea.passLength = generatePasswordLength();
-  console.log(passwordCriterea.passLength);
+  console.log("length = " + passwordCriterea.passLength);
 
   step = 1;
   passwordCriterea.includeSpecial = generateCharacterTypes();
-  console.log(passwordCriterea.includeSpecial);
+  console.log("include special chars = " + passwordCriterea.includeSpecial);
 
   step = 2;
   passwordCriterea.includeNumber = generateCharacterTypes();
-  console.log(passwordCriterea.includeNumber);
+  console.log("include numbers = " + passwordCriterea.includeNumber);
 
   step = 3;
   passwordCriterea.includeUpper = generateCharacterTypes();
-  console.log(passwordCriterea.includeUpper);
+  console.log("include upper-case = " + passwordCriterea.includeUpper);
 
   step = 4;
   passwordCriterea.includeLower = generateCharacterTypes();
-  console.log(passwordCriterea.includeLower);
+  console.log("include lower-case = " + passwordCriterea.includeLower);
 }
 
 generatePassword();
