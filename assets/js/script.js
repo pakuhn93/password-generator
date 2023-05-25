@@ -1,16 +1,23 @@
+/*
+
+QUESTIONS:
+1) why are the prompt boxes coming up immediately on the screen?
+2) why isn't the event listener working properly?
+3) why isn't GitHub matching my local, even though i've added, committed, and pushed
+
+*/
 // Assignment Code
-var password;
 var generateBtn = document.querySelector("#generate");
 var passMinLength = 8;
 var passMaxLength = 128;
 
 //array holding char types user may/may not want in their password
-var steps = [null, "special characters", "numbers", "upper case letters", "lower case letters"];
+const steps = [null, "special characters", "numbers", "upper case letters", "lower case letters"];
 var step = 0; //counter for which step we're on, used with steps array
 
 
 var chars = {
-  //*****NOT INCLUDING BACKSLASH FOR NOW*****
+  //*****NOT INCLUDING SPACEBAR AND BACKSLASH UNTIL FULLY FUNCTIONAL*****
   charSpecial: ["`", "~", "1", "@", "#", "$", "%", "^", "&", "*", 
   "(", ")", "-", "_", "=", "+", "[", "{", "]", "}", "|", "\"",
    "\'", ";", ":", ",", "<", ".", ">", "?", "/"], //NOT including " " spacebar, ran into weird issues when it was on the end of passwords
@@ -30,7 +37,7 @@ var passwordCriterea = {
   includeLower: true
 }
 
-//Prompt Length
+//Prompt User for Length
 function generatePasswordLength(){  
   var passLength;
 
@@ -79,7 +86,8 @@ function generateCharacterTypes(){
   } //END pseudo-recursion
 }
 
-function createPassword(passLength, includeSpecial, includeNumber, includeUpper, includeLower){
+//randomly builds the password based on received user input
+function buildPassword(passLength, includeSpecial, includeNumber, includeUpper, includeLower){
   var passChars = [];
   var tempPass = "";
 
@@ -97,8 +105,10 @@ function createPassword(passLength, includeSpecial, includeNumber, includeUpper,
     tempPass = tempPass + passChars[Math.floor(Math.random() * passChars.length)];
     console.log(tempPass);
   }
+  return tempPass;
 }
 
+//the main function for telling everything what to do to create a password
 function generatePassword(){ 
   //Prompt: length = 8 to 128 characters
   step = 0;
@@ -124,26 +134,22 @@ function generatePassword(){
   step = 4;
   passwordCriterea.includeLower = generateCharacterTypes();
   console.log("include lower-case = " + passwordCriterea.includeLower);
-
-  //randomly creates the password based on received user input
-  createPassword(passwordCriterea.passLength, passwordCriterea.includeSpecial, 
-    passwordCriterea.includeNumber, passwordCriterea.includeUpper, 
-    passwordCriterea.includeLower);
-
+  
+  writePassword();
+  
 }
 
-generatePassword();
 
 // Write password to the #password input
+function writePassword() {
+  var password = buildPassword(passwordCriterea.passLength, passwordCriterea.includeSpecial, 
+    passwordCriterea.includeNumber, passwordCriterea.includeUpper, 
+    passwordCriterea.includeLower);
+  var passwordText = document.querySelector("#password");
 
-// function writePassword() {
-//   var password = generatePassword();
-//   var passwordText = document.querySelector("#password");
+  passwordText.value = password;
+  console.log(passwordText);
+}
 
-//   passwordText.value = password;
-//   console.log(passwordText);
-// }
-
-// // Add event listener to generate button
-// generateBtn.addEventListener("click", writePassword());
-
+// Add event listener to generate button
+generateBtn.addEventListener("click", generatePassword());
