@@ -131,38 +131,3 @@ function writePassword(password) {
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", generatePassword);
-
-
-
-
-/* CODE GRAVEYARD
-
-//Prompt y/n for allowed character types
-function generateCharacterTypes(){
-  var includeCharType;
-
-  //START pseudo-recursion
-  while(true){
-    includeCharType = prompt("Would you like to include " + steps[step] + "?" + "\nPlease enter y/n", "y");
-
-    if (isNaN(includeCharType)){
-      includeCharType.toLowerCase();
-
-      if((includeCharType == "y")){
-        includeCharType = true;
-        return includeCharType;
-
-      } else if ((includeCharType == "n")){
-        includeCharType = false;
-        return includeCharType;
-
-      } else { 
-        alert("Input was not in the correct format (y/n)." + "\nPlease, re-enter your choice");
-      }
-    } else { 
-      alert("Input was not in the correct format (y/n)." + "\nPlease, re-enter your choice");
-    }
-  } //END pseudo-recursion
-}
-
-*/ //END CODE GRAVEYARD
