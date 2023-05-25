@@ -1,3 +1,11 @@
+/*
+
+QUESTIONS:
+1) why are the prompt boxes coming up immediately on the screen?
+2) why isn't the event listener working properly?
+3) why isn't GitHub matching my local, even though i've added, committed, and pushed
+
+*/
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 var passMinLength = 8;
