@@ -29,7 +29,7 @@ var passwordCriterea = {
   includeLower: true
 }
 
-//Prompt Length
+//Prompt User for Length
 function generatePasswordLength(){  
   var passLength;
 
@@ -78,6 +78,7 @@ function generateCharacterTypes(){
   } //END pseudo-recursion
 }
 
+//randomly builds the password based on received user input
 function buildPassword(passLength, includeSpecial, includeNumber, includeUpper, includeLower){
   var passChars = [];
   var tempPass = "";
@@ -99,6 +100,7 @@ function buildPassword(passLength, includeSpecial, includeNumber, includeUpper, 
   return tempPass;
 }
 
+//the main function for telling everything what to do to create a password
 function generatePassword(){ 
   //Prompt: length = 8 to 128 characters
   step = 0;
@@ -126,11 +128,11 @@ function generatePassword(){
   console.log("include lower-case = " + passwordCriterea.includeLower);
   
   writePassword();
-  //randomly creates the password based on received user input
+  
 }
 
-// Write password to the #password input
 
+// Write password to the #password input
 function writePassword() {
   var password = buildPassword(passwordCriterea.passLength, passwordCriterea.includeSpecial, 
     passwordCriterea.includeNumber, passwordCriterea.includeUpper, 
@@ -143,4 +145,3 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", generatePassword());
-
