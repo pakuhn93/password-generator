@@ -1,11 +1,3 @@
-/*
-
-QUESTIONS:
-1) why are the prompt boxes coming up immediately on the screen?
-2) why isn't the event listener working properly?
-3) why isn't GitHub matching my local, even though i've added, committed, and pushed
-
-*/
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 var passMinLength = 8;
@@ -14,7 +6,6 @@ var passMaxLength = 128;
 //array holding char types user may/may not want in their password
 const steps = [null, "special characters", "numbers", "upper case letters", "lower case letters"];
 var step = 0; //counter for which step we're on, used with steps array
-
 
 var chars = {
   //*****NOT INCLUDING SPACEBAR AND BACKSLASH UNTIL FULLY FUNCTIONAL*****
@@ -45,10 +36,12 @@ function generatePasswordLength(){
   while(true){
     passLength = prompt("Type in a Length for your Password (between 8 to 128 characters long)", 8);
 
+    //makes sure user input is a number
     if(isNaN(passLength)){
       alert("Input was not a number, please try again.");
     } else {
 
+      //checks length requirements
       if((passLength < passMinLength) || (passLength > passMaxLength)){
         alert("Password length did not meet the requirements." + "\nPlease re-enter a length between 8 to 128 characters.");  
       } else { 
@@ -59,25 +52,19 @@ function generatePasswordLength(){
 }
 
 //randomly builds the password based on received user input
-function buildPassword(passLength, includeSpecial, includeNumber, includeUpper, includeLower){
-  //initialize variables so no funky stuff
+function buildPassword(){
   var passChars = [];
   var tempPass = "";
 
   //uses conditionals to build an array with user-allowed characters
-  if(includeSpecial){ passChars = passChars.concat(chars.charSpecial) }
-  console.log(passChars);
-  if(includeNumber){ passChars = passChars.concat(chars.charNumber) }
-  console.log(passChars);
-  if(includeUpper){ passChars = passChars.concat(chars.charUpper) }
-  console.log(passChars);
-  if(includeLower){ passChars = passChars.concat(chars.charLower) }
-  console.log(passChars);
+  if(passwordCriterea.includeSpecial){ passChars = passChars.concat(chars.charSpecial) }
+  if(passwordCriterea.includeNumbers){ passChars = passChars.concat(chars.charNumber) }
+  if(passwordCriterea.includeUpper){ passChars = passChars.concat(chars.charUpper) }
+  if(passwordCriterea.includeLower){ passChars = passChars.concat(chars.charLower) }
   
   //constructs the password one character at a time
-  for(var i = 0; i < passLength; i++){
+  for(var i = 0; i < passwordCriterea.passLength; i++){
     tempPass = tempPass + passChars[Math.floor(Math.random() * passChars.length)];
-    console.log(tempPass);
   }
 
   return tempPass; //returns the generated password
@@ -85,49 +72,42 @@ function buildPassword(passLength, includeSpecial, includeNumber, includeUpper, 
 
 //the main function for telling everything what to do to create a password
 function generatePassword(){
+  
   //Prompt: length = 8 to 128 characters
   step = 0;
   passwordCriterea.passLength = generatePasswordLength();
-  console.log("length = " + passwordCriterea.passLength);
 
   //Confirm: include special characters
   step = 1;
   passwordCriterea.includeSpecial = confirm("Would you like to include " + steps[step] + "?");
-  console.log("include special chars = " + passwordCriterea.includeSpecial);
 
   //Confirm: include numbers
   step = 2;
-  passwordCriterea.includeNumber = confirm("Would you like to include " + steps[step] + "?");
-  console.log("include numbers = " + passwordCriterea.includeNumber);
+  passwordCriterea.includeNumbers = confirm("Would you like to include " + steps[step] + "?");
 
   //Confirm: include upper-case
   step = 3;
   passwordCriterea.includeUpper = confirm("Would you like to include " + steps[step] + "?");
-  console.log("include upper-case = " + passwordCriterea.includeUpper);
 
   //Confirm: include lower-case
   step = 4;
   passwordCriterea.includeLower = confirm("Would you like to include " + steps[step] + "?");
-  console.log("include lower-case = " + passwordCriterea.includeLower);
   
-  //randomly builds the password
-  var password = buildPassword(passwordCriterea.passLength, passwordCriterea.includeSpecial, 
-    passwordCriterea.includeNumber, passwordCriterea.includeUpper, 
-    passwordCriterea.includeLower);
-
-  //writes password out on the screen for the user to see
-  writePassword(password);
-  
+  //makes sure not all inputs are set to false before moving on to the next function
+  if(!passwordCriterea.includeSpecial && !passwordCriterea.includeNumber && !passwordCriterea.includeUpper && !passwordCriterea.includeLower){ 
+    alert("Your password must contain at least one character type." + 
+      "\nClick the 'Generate Password' button to try again.");
+  } else { 
+    var password = buildPassword(); //builds the password with random characters
+    writePassword(password);  //writes password out on the screen for the user to see
+  }  
 }
-
 
 // Write password to the #password input
 function writePassword(password) {
   var passwordText = document.querySelector("#password");
-
   passwordText.value = password;
-  console.log(passwordText);
 }
 
-// Add event listener to generate button
+//clicking the submit button causes the password generation process to begin
 generateBtn.addEventListener("click", generatePassword);
